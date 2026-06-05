@@ -1,0 +1,50 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: class02-postgres
+    environment:
+      POSTGRES_USER: developer
+      POSTGRES_PASSWORD: developer
+      POSTGRES_DB: advanced_databases
+    ports:
+      - "5432:5432"
+    volumes:
+      - class02-postgres-data:/var/lib/postgresql/data
+      - ./demo/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+      - ./demo/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U developer -d advanced_databases"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  workspace:
+    build:
+      context: ./demo
+      dockerfile: Dockerfile
+    container_name: class02-workspace
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PGPASSWORD: developer
+    ports:
+      - "2222:22"
+    volumes:
+      - .:/workspace/session
+    working_dir: /workspace/session
+
+  adminer:
+    image: adminer:4
+    container_name: class02-adminer
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres
+      ADMINER_DESIGN: pepa-linha-dark
+    ports:
+      - "8080:8080"
+
+volumes:
+  class02-postgres-data:
