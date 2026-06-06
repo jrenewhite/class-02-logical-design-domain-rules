@@ -17,6 +17,10 @@ services:
       interval: 5s
       timeout: 5s
       retries: 20
+    networks:
+      default:
+        aliases:
+          - postgres
 
   workspace:
     build:
@@ -33,6 +37,10 @@ services:
     volumes:
       - .:/workspace/session
     working_dir: /workspace/session
+    networks:
+      default:
+        aliases:
+          - workspace
 
   adminer:
     image: adminer:4
@@ -45,6 +53,10 @@ services:
       ADMINER_DESIGN: pepa-linha-dark
     ports:
       - "8080:8080"
+    networks:
+      default:
+        aliases:
+          - adminer
 
 volumes:
   class02-postgres-data:

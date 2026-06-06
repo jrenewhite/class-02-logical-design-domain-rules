@@ -1,7 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [[ -n ${SCRIPT_PATH-} ]]; then
+  script_source="$SCRIPT_PATH"
+elif [[ -n ${BASH_SOURCE[0]-} ]]; then
+  script_source="${BASH_SOURCE[0]}"
+else
+  script_source="$0"
+fi
+script_dir="$(cd "$(dirname "$script_source")" && pwd)"
 repo_root="$(cd "$script_dir/.." && pwd)"
 compose_file="$repo_root/docker-compose.yml"
 database_url="${DATABASE_URL:-postgresql://developer:developer@postgres:5432/advanced_databases}"
@@ -46,15 +53,15 @@ case "$command_name" in
     compose exec -it workspace psql "$database_url"
     ;;
   test)
-    "$repo_root/scripts/run-all.sh"
+    SCRIPT_PATH="$repo_root/scripts/run-all.sh" bash -s -- < <(tr -d '\r' < "$repo_root/scripts/run-all.sh")
     ;;
   run)
     activity_name="${1:-}"
     [[ -n "$activity_name" ]] || usage
-    "$repo_root/scripts/run-activity.sh" "$activity_name"
+    SCRIPT_PATH="$repo_root/scripts/run-activity.sh" bash -s -- "$activity_name" < <(tr -d '\r' < "$repo_root/scripts/run-activity.sh")
     ;;
   run-all)
-    "$repo_root/scripts/run-all.sh"
+    SCRIPT_PATH="$repo_root/scripts/run-all.sh" bash -s -- < <(tr -d '\r' < "$repo_root/scripts/run-all.sh")
     ;;
   "")
     usage

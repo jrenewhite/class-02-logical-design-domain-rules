@@ -17,7 +17,7 @@ El escenario común de la clase es **FamilyMarket**, una tienda en línea peque�
 
 ## Qué incluye este repo
 
-- `slides/session.pdf`: PDF de la sesión para alumnos.
+- `slides/02-logical-design-domain-rules.pdf`: PDF de la sesión para alumnos.
 - `demo/`: escenario, walkthrough y notas de modelado.
 - `activities/`: actividades guiadas y actividad de casa.
 - `scripts/`: validación pública y utilidades de entorno.
@@ -212,7 +212,7 @@ Por eso, pasar pruebas públicas **no garantiza calificación completa**.
 
 ## Flujo recomendado de trabajo
 
-1. Lee `slides/session.pdf`.
+1. Lee `slides/02-logical-design-domain-rules.pdf`.
 2. Lee `demo/scenario.md`.
 3. Sigue `demo/walkthrough.md`.
 4. Completa `class-activity-01`.

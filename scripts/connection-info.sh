@@ -1,6 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+if [[ -n ${SCRIPT_PATH-} ]]; then
+  script_source="$SCRIPT_PATH"
+elif [[ -n ${BASH_SOURCE[0]-} ]]; then
+  script_source="${BASH_SOURCE[0]}"
+else
+  script_source="$0"
+fi
+script_dir="$(cd "$(dirname "$script_source")" && pwd)"
+
+unset script_source script_dir
+
 cat <<'INFO'
 ==================================================
 Class 02 PostgreSQL connection info

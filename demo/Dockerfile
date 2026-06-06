@@ -48,36 +48,36 @@ RUN useradd -m -s /bin/bash developer \
 
 RUN printf "PasswordAuthentication yes\nPermitRootLogin no\nUsePAM no\n" >> /etc/ssh/sshd_config
 
-RUN cat <<'EOF' >/etc/profile.d/class02-connection-info.sh
-#!/usr/bin/env bash
-if [[ $- == *i* ]] && [[ -x /workspace/session/scripts/connection-info.sh ]]; then
-  /workspace/session/scripts/connection-info.sh
-fi
-EOF
+RUN printf '%s\n' \
+    '#!/usr/bin/env bash' \
+    'if [[ $- == *i* ]] && [[ -x /workspace/session/scripts/connection-info.sh ]]; then' \
+    '  SCRIPT_PATH=/workspace/session/scripts/connection-info.sh bash -s -- < <(tr -d '"'"'\r'"'"' < /workspace/session/scripts/connection-info.sh)' \
+    'fi' \
+    > /etc/profile.d/class02-connection-info.sh
 
 RUN printf '\nif [ -f /etc/profile.d/class02-connection-info.sh ]; then . /etc/profile.d/class02-connection-info.sh; fi\n' >> /etc/bash.bashrc
 
-RUN cat <<'EOF' >/etc/profile.d/class02-shortcuts.sh
-#!/usr/bin/env bash
-connection-info() {
-  /workspace/session/scripts/connection-info.sh "$@"
-}
-
-check() {
-  case "${1:-}" in
-    all)
-      /workspace/session/scripts/run-all.sh
-      ;;
-    "")
-      echo "Uso: check <activity-name|all>" >&2
-      return 1
-      ;;
-    *)
-      /workspace/session/scripts/run-activity.sh "$1"
-      ;;
-  esac
-}
-EOF
+RUN printf '%s\n' \
+    '#!/usr/bin/env bash' \
+    'connection-info() {' \
+    '  SCRIPT_PATH=/workspace/session/scripts/connection-info.sh bash -s -- "$@" < <(tr -d '"'"'\r'"'"' < /workspace/session/scripts/connection-info.sh)' \
+    '}' \
+    '' \
+    'check() {' \
+    '  case "${1:-}" in' \
+    '    all)' \
+    '      SCRIPT_PATH=/workspace/session/scripts/run-all.sh bash -s -- < <(tr -d '"'"'\r'"'"' < /workspace/session/scripts/run-all.sh)' \
+    '      ;;' \
+    '    "")' \
+    '      echo "Uso: check <activity-name|all>" >&2' \
+    '      return 1' \
+    '      ;;' \
+    '    *)' \
+    '      SCRIPT_PATH=/workspace/session/scripts/run-activity.sh bash -s -- "$1" < <(tr -d '"'"'\r'"'"' < /workspace/session/scripts/run-activity.sh)' \
+    '      ;;' \
+    '  esac' \
+    '}' \
+    > /etc/profile.d/class02-shortcuts.sh
 
 RUN printf '\nif [ -f /etc/profile.d/class02-shortcuts.sh ]; then . /etc/profile.d/class02-shortcuts.sh; fi\n' >> /etc/bash.bashrc
 
