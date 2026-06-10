@@ -2,16 +2,16 @@
 
 ## 1. ¿Qué entidades identificaste primero?
 
-Escribe aquí.
+Producto, Cliente
 
 ## 2. ¿Qué relación te pareció más importante y por qué?
 
-Escribe aquí.
+Relación entre pedido y producto, se necesita saber el estado de disponibilidad y todo lo que venga con precios
 
 ## 3. ¿Qué elemento te generó duda: entidad, atributo o regla?
 
-Escribe aquí.
+Atributo
 
 ## 4. Si tuvieras que convertir esto a tablas, ¿qué revisarías antes?
 
-Escribe aquí.
+La relación entre las entidades
