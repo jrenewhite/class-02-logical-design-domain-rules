@@ -1,21 +1,10 @@
-# Reporte - Home Activity
+# Reporte - Home Activity: Operacion vs Analisis
 
-## 1. ¿Qué reglas agregaste que no estaban claras al inicio?
+## Pregunta de negocio
+¿Que segmentos de clientes generan mayor ingreso confirmado?
 
-Escribe aquí.
+## Explicacion de la solucion
+Se unio la tabla de clientes con la de pedidos, filtrando por estado 'confirmado' y sumando el monto total agrupado por segmento.
 
-## 2. ¿Cuál regla sería más peligrosa de ignorar?
-
-Escribe aquí.
-
-## 3. ¿Cuál regla implementarías en base de datos y por qué?
-
-Escribe aquí.
-
-## 4. ¿Cuál regla dejarías en aplicación o proceso y por qué?
-
-Escribe aquí.
-
-## 5. ¿Qué duda te queda sobre reglas de dominio?
-
-Escribe aquí.
+## Reflexion: OLTP vs OLAP
+Esta es una operacion OLAP. A diferencia de OLTP que inserta transacciones individuales, OLAP agrega grandes volumenes de datos historicos.

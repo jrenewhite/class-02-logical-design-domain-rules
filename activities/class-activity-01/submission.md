@@ -1,22 +1,17 @@
 # Class Activity 01 - Entidades y relaciones
 
 ## Entidades
-
-| Entidad | Descripción | Por qué importa |
-|---|---|---|
-| Cliente | | |
-| Pedido | | |
-| Producto | | |
-| Pago | | |
+| Entidad | Descripcion |
+|---|---|
+| Cliente | Persona que compra |
+| Pedido | Transaccion de compra |
+| Producto | Articulo en venta |
+| Pago | Control financiero |
+| Envio | Entrega fisica |
 
 ## Relaciones
-
-| Origen | Relación | Destino | Tipo esperado | Justificación |
-|---|---|---|---|---|
-| Cliente | realiza | Pedido | uno a muchos | |
-| Pedido | contiene | Item de pedido | uno a muchos | |
-| Item de pedido | referencia | Producto | muchos a uno | |
-
-## Diagrama opcional
-
-Puedes agregar un diagrama Mermaid, PlantUML o una explicación textual.
+| Origen | Relacion | Destino |
+|---|---|---|
+| Cliente | realiza | Pedido |
+| Pedido | contiene | Producto |
+| Pedido | tiene | Pago |
